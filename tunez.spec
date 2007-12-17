@@ -21,7 +21,6 @@ Patch3:  tunez-ices_config.patch.bz2
 License: GPL
 Group:   Sound
 Url: http://tunez.sf.net
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):  apache-conf >= 2.0.54
 Requires(pre):  apache-mpm >= 2.0.54
 Requires(pre):	rpm-helper
