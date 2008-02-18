@@ -6,7 +6,7 @@
 # TODO rewrite configure_tunez in perl to avoid the duplication of configuration
 # try to have more autodetection and stuff like good default value
 
-Summary: Tunez is an MP3/Ogg Vorbis jukebox that works with a voting system
+Summary: MP3/Ogg Vorbis jukebox that works with a voting system
 Name: %{name}
 Version: %{version}
 Release: %{release}
