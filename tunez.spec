@@ -1,6 +1,6 @@
 %define name tunez
 %define version 1.21
-%define release %mkrel 6
+%define release %mkrel 7
 %define wwwtunez %{_var}/www/%{name}
 
 # TODO rewrite configure_tunez in perl to avoid the duplication of configuration
