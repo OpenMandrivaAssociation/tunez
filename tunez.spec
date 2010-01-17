@@ -92,16 +92,19 @@ Alias /%{name} %{wwwtunez}
 </Directory>
 EOF
 
+%pre
+%_pre_useradd tunez / /bin/false
+
 %post
 %if %mdkversion < 201010
 %_post_webapp
 %endif
 
 %postun
+%_postun_userdel tunez
 %if %mdkversion < 201010
 %_postun_webapp
 %endif
-
 
 %clean
 rm -rf %{buildroot}
@@ -118,13 +121,3 @@ rm -rf %{buildroot}
 %_mandir/man1/*
 %_datadir/%{name}/*
 %attr(0640,root,apache)%_datadir/%{name}/config.inc.php
-
-%pre
-%_pre_useradd tunez / /bin/false
-
-%postun
-%_postun_userdel tunez
-%_postun_webapp
-
-%post
-%_post_webapp
