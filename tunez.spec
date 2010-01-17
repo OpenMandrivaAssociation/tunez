@@ -1,6 +1,6 @@
 %define name tunez
 %define version 1.21
-%define release %mkrel 8
+%define release %mkrel 9
 %define wwwtunez %{_var}/www/%{name}
 
 # TODO rewrite configure_tunez in perl to avoid the duplication of configuration
@@ -50,36 +50,36 @@ make -C tmixer
 cp %SOURCE2 README.urpmi
 
 %install
-rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%{_bindir}
-mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1/
-mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}
-mkdir -p $RPM_BUILD_ROOT/%{_datadir}/tunez
-mkdir -p $RPM_BUILD_ROOT/%wwwtunez
+rm -rf %{buildroot}
+mkdir -p %{buildroot}/%{_bindir}
+mkdir -p %{buildroot}/%{_mandir}/man1/
+mkdir -p %{buildroot}/%{_sysconfdir}/%{name}
+mkdir -p %{buildroot}/%{_datadir}/tunez
+mkdir -p %{buildroot}/%wwwtunez
 
 #Installing Tunez
-mv html/* $RPM_BUILD_ROOT/%wwwtunez
+mv html/* %{buildroot}/%wwwtunez
 rm -rf html
 
-cp %SOURCE1 $RPM_BUILD_ROOT/%{_datadir}/tunez
-cp tmixer/smixer $RPM_BUILD_ROOT/%{_bindir}
-cp tmixer/smixer.conf $RPM_BUILD_ROOT/%{_sysconfdir}
-cp tmixer/man/smixer.1 $RPM_BUILD_ROOT/%{_mandir}/man1
-cp detach-1.2/detach $RPM_BUILD_ROOT/%{_bindir}
-cp detach-1.2/detach.1 $RPM_BUILD_ROOT/%{_mandir}/man1
+cp %SOURCE1 %{buildroot}/%{_datadir}/tunez
+cp tmixer/smixer %{buildroot}/%{_bindir}
+cp tmixer/smixer.conf %{buildroot}/%{_sysconfdir}
+cp tmixer/man/smixer.1 %{buildroot}/%{_mandir}/man1
+cp detach-1.2/detach %{buildroot}/%{_bindir}
+cp detach-1.2/detach.1 %{buildroot}/%{_mandir}/man1
 
 rm -rf detach-1.2
 rm -rf tmixer
 # useless code
 rm -Rf tunezsrv
 
-cp -av * $RPM_BUILD_ROOT/%{_datadir}/tunez
-rm -f $RPM_BUILD_ROOT/%{_datadir}/tunez/README.urpmi
+cp -av * %{buildroot}/%{_datadir}/tunez
+rm -f %{buildroot}/%{_datadir}/tunez/README.urpmi
 
-mv $RPM_BUILD_ROOT/%_datadir/%{name}/config.inc.php $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}/
-ln -s %{_sysconfdir}/%{name}/config.inc.php $RPM_BUILD_ROOT/%_datadir/%{name}/config.inc.php
+mv %{buildroot}/%_datadir/%{name}/config.inc.php %{buildroot}/%{_sysconfdir}/%{name}/
+ln -s %{_sysconfdir}/%{name}/config.inc.php %{buildroot}/%_datadir/%{name}/config.inc.php
 
-cp %SOURCE3 $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}/
+cp %SOURCE3 %{buildroot}/%{_sysconfdir}/%{name}/
 
 
 # apache configuration
@@ -92,9 +92,19 @@ Alias /%{name} %{wwwtunez}
 </Directory>
 EOF
 
+%post
+%if %mdkversion < 201010
+%_post_webapp
+%endif
+
+%postun
+%if %mdkversion < 201010
+%_postun_webapp
+%endif
+
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
