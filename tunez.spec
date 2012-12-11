@@ -21,7 +21,6 @@ Patch3:  tunez-ices_config.patch.bz2
 License: GPL
 Group:   Sound
 Url: http://tunez.sf.net
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 Requires(pre):  apache-conf >= 2.0.54
 Requires(pre):  apache-mpm >= 2.0.54
 Requires(pre):	rpm-helper
@@ -50,7 +49,6 @@ make -C tmixer
 cp %SOURCE2 README.urpmi
 
 %install
-rm -rf %{buildroot}
 mkdir -p %{buildroot}/%{_bindir}
 mkdir -p %{buildroot}/%{_mandir}/man1/
 mkdir -p %{buildroot}/%{_sysconfdir}/%{name}
@@ -96,21 +94,11 @@ EOF
 %_pre_useradd tunez / /bin/false
 
 %post
-%if %mdkversion < 201010
-%_post_webapp
-%endif
 
 %postun
 %_postun_userdel tunez
-%if %mdkversion < 201010
-%_postun_webapp
-%endif
-
-%clean
-rm -rf %{buildroot}
 
 %files
-%defattr(-,root,root)
 %doc README.urpmi INSTALL README HOWTO-Icecast TODO CREDITS UPGRADE ChangeLog
 %{wwwtunez}
 %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf
@@ -120,4 +108,4 @@ rm -rf %{buildroot}
 %_bindir/smixer
 %_mandir/man1/*
 %_datadir/%{name}/*
-%attr(0640,root,apache)%_datadir/%{name}/config.inc.php
+#% attr(0640,root,apache)%_datadir/%{name}/config.inc.php

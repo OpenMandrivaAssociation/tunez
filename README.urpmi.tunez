@@ -1,0 +1,17 @@
+To complete installation, you need to create a database using the provided 
+schema.
+You can use /usr/share/tunez/configure_tunez for this, if you adjust your 
+database password and your website/icecast URL.
+
+Once is done, browse http://localhost/tunez/admin/setup/admin_setup.php to 
+finish the tunez configuration.
+
+VERY IMPORTANT !!
+After you have finished the wizard DELETE the admin_setup.php file, or change
+the apache configuration to forbid access.
+
+If you don't delete this file then anyone can wipe your entire tunez database
+(not fun).
+
+Please read the Howto-Icecast to finish your configuration ( icecast can be 
+installed with urpmi ).

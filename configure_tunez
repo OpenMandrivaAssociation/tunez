@@ -1,0 +1,40 @@
+#!/bin/bash
+DATABASE_ADMIN=root
+HOSTNAME=`hostname`
+CONFIG_INC=/usr/share/tunez/config.inc.php
+
+#TUNEZ_PASSWORD is the password for login to your tunez database
+export TUNEZ_PASSWORD="YOUR-DATABASE-PASSWORD"
+
+#VHOSTNAME is the public name of your server (like http://tunez.mysite.com)
+#By default this is set to localhost, but this will prevent external user to log on your tunez website
+export VHOSTNAME="http://localhost/"
+
+#ICECAST_URL is the public name of your icecast server (like http://www.yourserver.com:8000/ices)
+#By default this is set to localhost, but this will prevent external user to log on your tunez website
+export ICECAST_URL="http://localhost:8000/ices"
+
+#AUDIOPATH is the path were you store your music, this directory will be indexed by Tunez
+export AUDIOPATH="/mnt/mymusic/"
+
+#Creating Database
+echo "Creating tunez database using $DATABASE_ADMIN user"
+mysqladmin -u$DATABASE_ADMIN -p create tunez
+
+#Grant Access to tunez user
+echo "Grant tunez user on the tunez database"
+mysql -u$DATABASE_ADMIN -p << EOF
+GRANT ALL on tunez.* to tunez@$HOSTNAME identified by '$TUNEZ_PASSWORD';
+GRANT ALL on tunez.* to tunez@localhost identified by '$TUNEZ_PASSWORD';
+FLUSH privileges;
+EOF
+perl -pi -e 's|^\$_CONF\['"'"'mysql_dbpass'"'"'\].*|\$_CONF['"'"'mysql_dbpass'"'"']= \"$ENV{TUNEZ_PASSWORD}\"\;|g' $CONFIG_INC
+
+echo "Setting default server name to $VHOSTNAME"
+perl -pi -e 's|^\$_CONF\['"'"'url'"'"'\].*|\$_CONF['"'"'url'"'"']=\"$ENV{VHOSTNAME}tunez/\"\;|g' $CONFIG_INC
+
+echo "Setting icecast server name to $ICECAST_URL"
+perl -pi -e 's|^\$_CONF\['"'"'icecast_URL'"'"'\].*|\$_CONF\['"'"'icecast_URL'"'"'\] = \"$ENV{ICECAST_URL}\"\;|g' $CONFIG_INC
+
+echo "Setting default music path to $AUDIOPATH"
+perl -pi -00 -e 's|\$_CONF\['"'"'dirs'"'"'\] = Array \(.*?\);|\$_CONF\['"'"'dirs'"'"'\] = Array \( \n \"$ENV{AUDIOPATH}\"\n\)\;|sg' $CONFIG_INC
