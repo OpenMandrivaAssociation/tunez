@@ -26,6 +26,8 @@ Requires:	php-curl
 Requires:	php-mysql
 Requires:	ices
 
+%define debug_package %{nil}
+
 %description
 Tunez in an mp3/ogg jukebox that works with a voting system that users access
 through a web interface.  Each registered user can vote for the tracks he
