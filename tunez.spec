@@ -1,6 +1,6 @@
 %define name tunez
 %define version 1.21
-%define release %mkrel 10
+%define release: 11
 %define wwwtunez %{_var}/www/%{name}
 
 # TODO rewrite configure_tunez in perl to avoid the duplication of configuration
@@ -93,7 +93,6 @@ EOF
 %pre
 %_pre_useradd tunez / /bin/false
 
-%post
 
 %postun
 %_postun_userdel tunez
