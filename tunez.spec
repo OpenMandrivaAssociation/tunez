@@ -1,15 +1,12 @@
-%define name tunez
-%define version 1.21
-%define release: 12
 %define wwwtunez %{_var}/www/%{name}
 
 # TODO rewrite configure_tunez in perl to avoid the duplication of configuration
 # try to have more autodetection and stuff like good default value
 
 Summary: MP3/Ogg Vorbis jukebox that works with a voting system
-Name: %{name}
-Version: %{version}
-Release: %{release}
+Name:    tunez
+Version: 1.21
+Release: 12
 Source0: %{name}-%{version}.tar.bz2
 Source1: configure_tunez
 Source2: README.urpmi.tunez
