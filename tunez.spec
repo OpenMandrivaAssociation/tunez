@@ -1,12 +1,14 @@
 %define wwwtunez %{_var}/www/%{name}
 
+%define debug_package %{nil}
+
 # TODO rewrite configure_tunez in perl to avoid the duplication of configuration
 # try to have more autodetection and stuff like good default value
 
 Summary: MP3/Ogg Vorbis jukebox that works with a voting system
 Name:    tunez
 Version: 1.21
-Release: 12
+Release: 13
 Source0: %{name}-%{version}.tar.bz2
 Source1: configure_tunez
 Source2: README.urpmi.tunez
@@ -25,8 +27,6 @@ Requires:       apache-mod_php php-xml
 Requires:	php-curl
 Requires:	php-mysql
 Requires:	ices
-
-%define debug_package %{nil}
 
 %description
 Tunez in an mp3/ogg jukebox that works with a voting system that users access
@@ -84,7 +84,7 @@ install -d -m 755 %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
 cat > %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{name}.conf <<EOF
 Alias /%{name} %{wwwtunez}
 <Directory %{wwwtunez}>
-    Allow from all
+    Require all granted
     php_value max_execution_time  120
 </Directory>
 EOF
