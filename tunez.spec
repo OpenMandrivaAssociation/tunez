@@ -8,7 +8,7 @@
 Summary: MP3/Ogg Vorbis jukebox that works with a voting system
 Name:    tunez
 Version: 1.21
-Release: 13
+Release: 14
 Source0: %{name}-%{version}.tar.bz2
 Source1: configure_tunez
 Source2: README.urpmi.tunez
