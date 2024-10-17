@@ -19,7 +19,7 @@ Patch2:  tunezd.patch.bz2
 Patch3:  tunez-ices_config.patch.bz2
 License: GPL
 Group:   Sound
-Url: http://tunez.sf.net
+Url: https://tunez.sf.net
 Requires(pre):  apache-conf >= 2.0.54
 Requires(pre):  apache-mpm >= 2.0.54
 Requires(pre):	rpm-helper
